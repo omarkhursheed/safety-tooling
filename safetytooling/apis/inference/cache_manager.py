@@ -227,7 +227,9 @@ class FileBasedCacheManager(BaseCacheManager):
             contents = self.in_memory_cache.get(cache_file)
             if contents is None:
                 # Entry was evicted - reload from disk
-                LOGGER.info(f"Cache entry evicted during access, reloading from disk: {cache_file=}, {prompt_hash=}, {params}")
+                LOGGER.info(
+                    f"Cache entry evicted during access, reloading from disk: {cache_file=}, {prompt_hash=}, {params}"
+                )
                 with filelock.FileLock(str(cache_file) + ".lock"):
                     contents = load_json(cache_file)
                     self.add_entry(cache_file, contents)
